@@ -114,3 +114,20 @@ fig_one_player = px.bar(
 fig_one_player.update_traces(width=0.4)
 st.plotly_chart(fig_one_player, use_container_width=True)
 
+# Plot 2 Top 10 Players in Selected Year
+top_players = (
+    db_copy[db_copy["year"] == selected_year]
+    .groupby("name", as_index=False)["value"]
+    .sum()
+    .sort_values("value", ascending=False)
+    .head(10)
+)
+
+fig_top_players = px.bar(
+    top_players,
+    x="name",
+    y="value",
+    title=f"Top 10 Players in {selected_year}"
+)
+
+st.plotly_chart(fig_top_players, use_container_width=True)
