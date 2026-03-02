@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # Connect to db
-conn = sqlite3.connect("db/mlb_history.db")
+conn = sqlite3.connect("db/mlb_history.db", check_same_thread=False)
 db = pd.read_sql("SELECT * FROM main_data_american_league", conn)
 conn.close()
 
