@@ -60,3 +60,10 @@ for i in blocks_am_le:
     years_american_league.append(i.text)
     links_american_league.append(i.get_attribute("href"))
     al.append("American League")
+
+#columns AL
+df_years_american_league = pd.DataFrame({
+    "year": years_american_league,
+    "league": al
+    })
+counter_columns(df_years_american_league, "df_years_american_league")
