@@ -7,10 +7,19 @@ import pandas as pd
 import os
 import shutil
 
+local_db_path = "db/mlb_history.db"
 tmp_db_path = "/tmp/mlb_history.db"
 
-if os.path.exists("db/mlb_history.db"):
-    shutil.copy("db/mlb_history.db", tmp_db_path)
+if "STREAMLIT_SERVER" in os.environ:
+    if os.path.exists(local_db_path):
+        shutil.copy(local_db_path, tmp_db_path)
+    db_path = tmp_db_path
+else:
+    db_path = local_db_path
+
+if not os.path.exists(db_path):
+    st.error(f"Database not found: {db_path}")
+    st.stop()
 
 # Setup
 st.set_page_config(
@@ -20,7 +29,14 @@ st.set_page_config(
 )
 
 # Connect to db
-conn = sqlite3.connect(tmp_db_path, check_same_thread=False)
+conn = sqlite3.connect(db_path, check_same_thread=False)
+
+tables = pd.read_sql("SELECT name FROM sqlite_master WHERE type='table';", conn)
+if 'main_data_american_league' not in tables['name'].values:
+    st.error("Table 'main_data_american_league' does not exist in the database.")
+    conn.close()
+    st.stop()
+
 db = pd.read_sql("SELECT * FROM main_data_american_league", conn)
 conn.close()
 
