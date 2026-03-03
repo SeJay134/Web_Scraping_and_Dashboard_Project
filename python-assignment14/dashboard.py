@@ -6,18 +6,20 @@ import sqlite3
 import pandas as pd
 import os
 import shutil
+from pathlib import Path
 
 #
-local_db_path = os.path.join("db", "mlb_history.db")
-tmp_db_path = "/tmp/mlb_history.db"
+BASE_DIR = Path(__file__).resolve().parent
+db_path = os.path.join(BASE_DIR, "db", "mlb_history.db")
+tmp_db_path = os.path.join(BASE_DIR, "tmp", "mlb_history.db")
 
 #
-if "STREAMLIT_SERVER" in os.environ:
-    if os.path.exists(local_db_path):
-        shutil.copy(local_db_path, tmp_db_path)
-    db_path = tmp_db_path
-else:
-    db_path = local_db_path
+# if "STREAMLIT_SERVER" in os.environ:
+#     if os.path.exists(local_db_path):
+#         shutil.copy(local_db_path, tmp_db_path)
+#     db_path = tmp_db_path
+# else:
+#     db_path = local_db_path
 
 #
 if not os.path.exists(db_path):
