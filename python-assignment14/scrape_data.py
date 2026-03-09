@@ -86,25 +86,7 @@ df_years_national_league = pd.DataFrame({
     })
 counter_columns(df_years_national_league, 'df_years_national_league')
 
-# add info about each year | American League Player Review ------------------delete
-# name_header = driver.find_element(By.XPATH, '//div[@class="ba-table"]//h2[contains(text(), "American League")]') ------------------delete
-
-# name_al_player_reviw = [] ------------------delete
-# statistic = [] ------------------delete
-# names = [] ------------------delete
-# teams = [] ------------------delete
-# value = [] ------------------delete
-
-#driver.get(links_american_league[0]) ------------------------------------ delete
 wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
-# h2 = driver.find_element(By.CSS_SELECTOR, "td h2") ------------------delete
-
-# text = h2.text ------------------delete
-# year = re.search(r"\d{4}", text).group() ------------------delete
-
-# data_statistic = driver.find_element(By.CLASS_NAME, 'datacolBlue') ------------------delete
-# print(data_statistic.text) # Base on Balls ------------------delete
 
 main_table = []
 
@@ -123,7 +105,7 @@ for link in links_american_league:
                 continue
             #logging_check(h2[0], 'h2[0]') # print('h2[0]', h2[0].text) # not empty
 
-            #year = re.search(r"\d{4}", h2[0].text).group() # h2[0].text.split()[0] -------------------- checking
+            #year = re.search(r"\d{4}", h2[0].text).group() # h2[0].text.split()[0] - checking
             match = re.search(r"\d{4}", h2[0].text)
             if not match:
                 continue
@@ -175,7 +157,7 @@ for link in links_american_league:
                 else:
                     continue
 
-                if not current_statistic: # --------------------------------- checking
+                if not current_statistic: # checking
                     continue
 
                 name_cell_text = cells[1].text.strip() if len(cells) > 1 else ""
